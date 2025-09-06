@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Task {
     pub id: String,
     pub title: String,
@@ -10,35 +10,30 @@ pub struct Task {
 
 impl Task {
     pub fn new(id: String, title: String, description: String, completed: bool) -> Self {
-        Self { id, title, description, completed }
+        Self {
+            id,
+            title,
+            description,
+            completed,
+        }
     }
 }
 
-impl Task {
-    pub fn id(&self) -> &str {
-        &self.id
-    }
-
-    pub fn title(&self) -> &str {
-        &self.title
-    }
-
-    pub fn description(&self) -> &str {
-        &self.description
-    }
-    
-}
-
-
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Comment {
     pub id: String,
     pub content: String,
     pub task_id: String,
-    pub created_at: DateTime<Utc>,
+    pub created_at: String,
 }
 
 impl Comment {
     pub fn new(id: String, content: String, task_id: String) -> Self {
-        Self { id, content, task_id, created_at: Utc::now() }
+        Self {
+            id,
+            content,
+            task_id,
+            created_at: chrono::Utc::now().to_string(),
+        }
     }
 }
